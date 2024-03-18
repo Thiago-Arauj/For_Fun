@@ -15,31 +15,43 @@ Modo_de_Jogo = int(input('''
    =======================
      '''))
 
-Win_Condition = (Table[0][0] == Table[0][1] == Table[0][2] or
-                 Table[1][0] == Table[1][1] == Table[2][2] or
-                 Table[2][0] == Table[2][1] == Table[2][2] or
-                 Table[0][0] == Table[1][0] == Table[2][0] or
-                 Table[0][1] == Table[1][1] == Table[2][1] or
-                 Table[0][2] == Table[1][2] == Table[2][2] or
-                 Table[0][0] == Table[1][1] == Table[2][2] or
-                 Table[0][2] == Table[1][1] == Table[2][0])
-
-print(type(Win_Condition))
-
 # ============================================================================
 #  Acima definimos variavéis importantes para o jogo num geral
 #=============================================================================
 
 
-def CheckWin2P (Table, Win_Condition):
-    
-    if Win_Condition == True:
-        print("Temos um vencedor!")
+def CheckWin2P (Table):
+
+    if Table[0][0] == Table[0][1] == Table[0][2]:
         Modo_de_Jogo = 3
+
+    elif Table[1][0] == Table[1][1] == Table[2][2]:
+        Modo_de_Jogo = 3
+
+    elif Table[2][0] == Table[2][1] == Table[2][2]:
+        Modo_de_Jogo = 3
+
+    elif Table[0][0] == Table[1][0] == Table[2][0]:
+        Modo_de_Jogo = 3
+
+    elif Table[0][1] == Table[1][1] == Table[2][1]:
+        Modo_de_Jogo = 3
+
+    elif Table[0][2] == Table[1][2] == Table[2][2]:
+        Modo_de_Jogo = 3
+
+    elif Table[0][0] == Table[1][1] == Table[2][2]:
+        Modo_de_Jogo = 3
+
+    elif Table[0][2] == Table[1][1] == Table[2][0]:
+        Modo_de_Jogo = 3
+
     else:
         Modo_de_Jogo = 2
-    
+
     return Modo_de_Jogo
+
+    
 
 def SelecChar (Char):
     P1_Char = input("X ou O? ").upper()
@@ -111,7 +123,7 @@ def MovePlayer2 (Table, P2_Char):
         else:
             TryAgain = 1
             print("Você selecionou uma casa inválida, tente de novo!")
-    
+
     return Table
 
 # ============================================================================  
@@ -131,8 +143,40 @@ while Modo_de_Jogo > 0:
     
     while Modo_de_Jogo == 2:
         MovePlayer1(Table, P1_Char)
-        CheckWin2P(Table, Win_Condition)
+        Modo_de_Jogo = CheckWin2P(Table)
+        if Modo_de_Jogo == 3:
+            break
         MovePlayer2(Table, P2_Char)
-        CheckWin2P(Table, Win_Condition)
-        
+        Modo_de_Jogo = CheckWin2P(Table)
+    
+    if Modo_de_Jogo == 3:
 
+        print("Temos um vencedor!")
+        print(f'''
+    =======
+    {Table[0][0]} {Table[0][1]} {Table[0][2]}
+    {Table[1][0]} {Table[1][1]} {Table[1][2]}
+    {Table[2][0]} {Table[2][1]} {Table[2][2]}
+   =======
+        ''')
+
+        Play_Again = int(input('''
+   =======================
+    Deseja jogar de novo?
+    [1] Sim
+    [0] Não
+       '''))
+
+        if Play_Again ==  1:
+            Modo_de_Jogo = int(input('''
+    =======================
+        Como deseja jogar?
+        [1] Single Player
+        [2] Multiplayer
+        [0] Não quero jogar
+    =======================
+        '''))
+        elif Play_Again == 0:
+            print("Tudo bem! Foi um bom jogo.")
+            Modo_de_Jogo = 0
+        
