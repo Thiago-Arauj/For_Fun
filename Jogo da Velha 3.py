@@ -4,7 +4,9 @@ Table = [['0/0', '0/1', '0/2'],
          ['1/0', '1/1', '1/2'],
          ['2/0', '2/1', '2/2']]
 
-Char = ("X", "O")
+Char = (" X ", " O ")
+
+Historico = []
 
 Modo_de_Jogo = int(input('''
    =======================
@@ -25,7 +27,7 @@ def CheckWin2P (Table):
     if Table[0][0] == Table[0][1] == Table[0][2]:
         Modo_de_Jogo = 3
 
-    elif Table[1][0] == Table[1][1] == Table[2][2]:
+    elif Table[1][0] == Table[1][1] == Table[1][2]:
         Modo_de_Jogo = 3
 
     elif Table[2][0] == Table[2][1] == Table[2][2]:
@@ -55,6 +57,8 @@ def CheckWin2P (Table):
 
 def SelecChar (Char):
     P1_Char = input("X ou O? ").upper()
+    P1_Char = P1_Char.center(3, " ")
+
     if P1_Char == Char[0]:
         P2_Char = Char[1]
     elif P1_Char == Char[1]:
@@ -79,11 +83,11 @@ def MovePlayer1 (Table, P1_Char):
         Linha, Coluna = (input(f'''
     Jogador 1, digite o número da casa onde quer jogar
     da forma como está na tela:
-   =======
+   =============
     {Table[0][0]} {Table[0][1]} {Table[0][2]}
     {Table[1][0]} {Table[1][1]} {Table[1][2]}
     {Table[2][0]} {Table[2][1]} {Table[2][2]}
-   =======
+   =============
                      ''').split("/"))
         
         Linha = int(Linha)
@@ -107,11 +111,11 @@ def MovePlayer2 (Table, P2_Char):
         Linha, Coluna = (input(f'''
     Jogador 2, digite o número da casa onde quer jogar
     da forma como está na tela:
-   =======
+   =============
     {Table[0][0]} {Table[0][1]} {Table[0][2]}
     {Table[1][0]} {Table[1][1]} {Table[1][2]}
     {Table[2][0]} {Table[2][1]} {Table[2][2]}
-   =======
+   =============
                      ''').split("/"))
         
         Linha = int(Linha)
@@ -135,36 +139,52 @@ while Modo_de_Jogo > 0:
     
     P1_Char, P2_Char = SelecChar(Char)
 
-    Play_Again = 1
-    
-
-        
-        
+    Play_Again = 1    
     
     while Modo_de_Jogo == 2:
         MovePlayer1(Table, P1_Char)
         Modo_de_Jogo = CheckWin2P(Table)
         if Modo_de_Jogo == 3:
+            Historico.append("P1")
             break
         MovePlayer2(Table, P2_Char)
         Modo_de_Jogo = CheckWin2P(Table)
+        if Modo_de_Jogo == 3:
+            Historico.append("P2")
+            break
     
-    if Modo_de_Jogo == 3:
+    while Modo_de_Jogo == 3:
 
-        print("Temos um vencedor!")
+        print(f"O vencedor é {Historico[-1]}")
         print(f'''
-    =======
+   =============
     {Table[0][0]} {Table[0][1]} {Table[0][2]}
     {Table[1][0]} {Table[1][1]} {Table[1][2]}
     {Table[2][0]} {Table[2][1]} {Table[2][2]}
-   =======
+   =============
         ''')
+        print(Historico)
+        Checar_hist = int(input(f'''
+   =======================
+    Gostaria de ver o
+    placar até agora?
+    [1] Sim
+    [0] Não
+   =======================
+     '''))
+        
+        if Checar_hist == 1:
+            ordem = 1
+            for nome in Historico:
+                print(f"Partida {ordem}: O vencedor foi {nome}")
+                ordem += 1
 
         Play_Again = int(input('''
    =======================
     Deseja jogar de novo?
     [1] Sim
     [0] Não
+   =======================
        '''))
 
         if Play_Again ==  1:
@@ -176,7 +196,8 @@ while Modo_de_Jogo > 0:
         [0] Não quero jogar
     =======================
         '''))
+            break
         elif Play_Again == 0:
             print("Tudo bem! Foi um bom jogo.")
             Modo_de_Jogo = 0
-        
+            break
