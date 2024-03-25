@@ -107,38 +107,17 @@ def ChecarColunas(Table, P1_Char, P2_Char):
         qntd_P2 = 0
 
         for i in range(3):
-            if Table[i][coluna] == P1_Char:
-                qntd_P1 += 1
-            elif Table[i][coluna] == P2_Char:
+            if Table[i][coluna] == P2_Char:
                 qntd_P2 += 1
+            elif Table[i][coluna] == P1_Char:
+                qntd_P1 += 1
 
         if qntd_P1 == 2 and qntd_P2 == 0:
-            if Table[0][coluna] not in Char:
-                Table[0][coluna] = P2_Char
-            elif Table[1][coluna] not in Char:
-                Table[1][coluna] = P2_Char
-            elif Table[2][coluna] not in Char:
-                Table[2][coluna] = P2_Char
-            
-            break
-
+            for i in range(3):
+                if Table[i][coluna] not in Char:
+                    Table[i][coluna] = P2_Char
         elif qntd_P1 == 2 and qntd_P2 == 1:
-            if Table[0][0] not in Char:
-                Table[0][0] = P2_Char
-
-            elif Table[1][1] not in Char:
-                Table[1][1] = P2_Char
-
-            elif Table[2][2] not in Char:
-                Table [2][2] = P2_Char
-
-            elif Table[2][0] not in Char:
-                Table [2][0] = P2_Char
-
-            elif Table[0][2] not in Char:
-                Table [0][2] = P2_Char
-
-            break
+            Jogada1(Table, P2_Char)
 
         coluna += 1
     
@@ -153,38 +132,17 @@ def ChecarLinha (Table, P1_Char, P2_Char):
         qntd_P2 = 0
 
         for i in range(3):
-            if Table[linha][i] == P1_Char:
-                qntd_P1 += 1
-            elif Table[linha][i] == P2_Char:
+            if Table[linha][i] == P2_Char:
                 qntd_P2 += 1
+            elif Table[linha][i] == P1_Char:
+                qntd_P1 += 1
 
         if qntd_P1 == 2 and qntd_P2 == 0:
-            if Table[0][i] not in Char:
-                Table[0][i] = P2_Char
-            elif Table[1][i] not in Char:
-                Table[1][i] = P2_Char
-            elif Table[2][i] not in Char:
-                Table[2][i] = P2_Char
-            
-            break
-
+            for i in range(3):
+                if Table[linha][i] not in Char:
+                    Table[linha][i] = P2_Char
         elif qntd_P1 == 2 and qntd_P2 == 1:
-            if Table[0][0] not in Char:
-                Table[0][0] = P2_Char
-
-            elif Table[1][1] not in Char:
-                Table[1][1] = P2_Char
-
-            elif Table[2][2] not in Char:
-                Table [2][2] = P2_Char
-
-            elif Table[2][0] not in Char:
-                Table [2][0] = P2_Char
-
-            elif Table[0][2] not in Char:
-                Table [0][2] = P2_Char
-            
-            break
+            Jogada1(Table, P2_Char)
 
         linha += 1
     
@@ -247,11 +205,19 @@ def ChecarDiagonais (Table, P1_Char, P2_Char):
 
 def Jogada2 (Table, P1_Char, P2_Char):
 
+    Table_Init = Table
+
     # Função criada pra conter as outras 3 e melhorar visualização do código
 
-    ChecarColunas(Table, P1_Char, P2_Char)
-    ChecarLinha(Table, P1_Char, P2_Char)
-    ChecarDiagonais(Table, P1_Char, P2_Char)
+    if Table_Init == Table:
+        ChecarLinha(Table, P1_Char, P2_Char)
+        Table_Init = Table
+    elif Table_Init == Table:
+        ChecarColunas(Table, P1_Char, P2_Char)
+        Table_Init = Table
+    elif Table_Init == Table:
+        ChecarDiagonais(Table, P1_Char, P2_Char)
+        Table_Init = Table
 
     return Table
 
@@ -268,12 +234,6 @@ def FinalizarJogoC (Table, P1_Char, P2_Char):
         qntd_P2 = 0
 
         for i in range(3):
-            if Table[i][coluna] == P1_Char:
-                qntd_P1 += 1
-            elif Table[i][coluna] == P2_Char:
-                qntd_P2 += 1
-
-        for i in range(3):
             if Table[i][coluna] == P2_Char:
                 qntd_P2 += 1
             elif Table[i][coluna] == P1_Char:
@@ -285,11 +245,6 @@ def FinalizarJogoC (Table, P1_Char, P2_Char):
                     Table[i][coluna] = P2_Char
         elif qntd_P2 == 2 and qntd_P1 == 1:
             Jogada1(Table, P2_Char)
-
-        elif qntd_P2 == 1 and qntd_P1 == 1:
-            for i in range(3):
-                if Table[i][coluna] not in Char:
-                    Table[i][coluna] = P2_Char
 
         coluna += 1
     
@@ -315,11 +270,6 @@ def FinalizarJogoL (Table, P1_Char, P2_Char):
         elif qntd_P2 == 2 and qntd_P1 == 1:
             Jogada1(Table, P2_Char)
 
-        elif qntd_P2 == 1 and qntd_P1 == 1:
-            for i in range(3):
-                if Table[linha][i] not in Char:
-                    Table[linha][i] = P2_Char
-
         linha += 1
     
     return Table
@@ -338,14 +288,11 @@ def FinalizarJogoD (Table, P1_Char, P2_Char):
     
     if qntd_P2 == 2 and qntd_P1 == 0:
 
-        if Table[0][0] not in Char:
-            Table[0][0] = P2_Char
-
-        elif Table[1][1] not in Char:
-            Table[1][1] = P2_Char
-
-        elif Table[2][2] not in Char:
-            Table[2][2] = P2_Char
+        if Table[i][i] not in Char:
+            Table[i][i] = P2_Char
+            
+    elif qntd_P2 == 2 and qntd_P1 == 1:
+        Jogada2(Table, P1_Char, P2_Char)
 
     # Checa a diagonal 2
 
@@ -360,29 +307,12 @@ def FinalizarJogoD (Table, P1_Char, P2_Char):
         elif Table[2][0] not in Char:
             Table[2][0] = P2_Char
 
-    elif qntd_P1 == 2 and qntd_P2 == 1:
-            if Table[0][0] not in Char:
-                Table[0][0] = P2_Char
-
-            elif Table[1][1] not in Char:
-                Table[1][1] = P2_Char
-
-            elif Table[2][2] not in Char:
-                Table [2][2] = P2_Char
-
-            elif Table[2][0] not in Char:
-                Table [2][0] = P2_Char
-
-            elif Table[0][2] not in Char:
-                Table [0][2] = P2_Char
 
     return Table
 
 
 def Jogada3 (Table, P1_Char, P2_Char):
-    
-    # Função criada pra conter as outras 3 e melhorar visualização do código
-    
+
     FinalizarJogoC(Table, P1_Char, P2_Char)
     FinalizarJogoL(Table, P1_Char, P2_Char)
     FinalizarJogoD(Table, P1_Char, P2_Char)
