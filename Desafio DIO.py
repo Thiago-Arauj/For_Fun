@@ -78,6 +78,5 @@ Qual operação deseja realizar?
     elif menu > 3:
         print('Selecione uma operação válida')
         continue
-    print('oi')
 
     saldo = att_saldo(saldo, extrato_saque, extrato_deposito)
