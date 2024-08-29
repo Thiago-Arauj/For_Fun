@@ -6,7 +6,7 @@ saldo_user = 1500
 
 opcao = int(input('''
 ===============================
-Seja Bem-Vindo ao banco Thigas!
+Seja Bem-Vindo ao banco Virtual!
 Digite a opção que deseja:
 [1] Consultar Saldo.
 [2] Fazer um saque.
